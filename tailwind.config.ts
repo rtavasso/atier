@@ -1,7 +1,8 @@
+// tailwind.config.ts
 import type { Config } from "tailwindcss"
 
 const config = {
-  darkMode: ["class"],
+  darkMode: ["class"], // Keep dark mode strategy if needed
   content: [
     "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
@@ -20,6 +21,7 @@ const config = {
     },
     extend: {
       colors: {
+        // Map semantic names to the CSS variables defined in globals.css
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -53,19 +55,13 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        purple: {
-          "300": "#d8b4fe",
-          "400": "#c084fc",
-          "500": "#a855f7",
-          "600": "#9333ea",
-          "700": "#7e22ce",
-        },
-        gray: {
-          "400": "#9ca3af",
-          "500": "#6b7280",
-          "800": "#1f2937",
-          "900": "#111827",
-        },
+        // Remove specific color palettes like 'purple' and 'gray' if
+        // they are replaced by the semantic colors above.
+        // If you still need specific shades, define them here or keep them.
+        // Example: keep a gray shade if needed outside semantic colors
+        // gray: {
+        //   "500": "#6b7280", // Keep only if necessary
+        // },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -97,4 +93,3 @@ const config = {
 } satisfies Config
 
 export default config
-
