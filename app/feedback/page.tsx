@@ -2,112 +2,156 @@
 'use client'; // Needs to be client component for useFormState/useFormStatus
 
 import { useFormState, useFormStatus } from 'react-dom';
-import Link from "next/link";
-import { AudioWaveformIcon as Waveform, ArrowLeft, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label"; // Import Label
-import { Textarea } from "@/components/ui/textarea";
-import { submitFeedback, type FeedbackFormState } from '@/app/actions/formActions'; // Import NEW action and state type
+import { Label } from '@/components/ui/label';
+// Import specific OS icons and Download icon
+import { AudioWaveformIcon as Waveform, Mail, MessageSquare, HelpCircle, Download, Apple, MonitorIcon } from "lucide-react";
+import Link from "next/link";
+import { submitForm, type EmailFormState } from '@/app/actions/formActions';
+import { DownloadButton } from '@/components/ui/DownloadButton'; // Import the DownloadButton component
+import { ModeToggle } from "@/components/ui/mode-toggle"; // Import ModeToggle
 
-// Define SubmitButton for feedback form
-function FeedbackSubmitButton() {
+// SubmitButton for the email form
+function SubmitButton() {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" className="w-full bg-cyan-600 hover:bg-cyan-700" aria-disabled={pending} disabled={pending}> {/* Use new accent */}
-      {pending ? 'Submitting...' : 'Submit Feedback'}
+    <Button type="submit" className="w-full h-12 bg-primary text-primary-foreground hover:bg-primary/90" aria-disabled={pending} disabled={pending}>
+      <Mail className="mr-2 h-4 w-4" />
+      {pending ? 'Submitting...' : 'Get Download Link'}
     </Button>
   );
 }
 
+export default function Home() {
+  const initialState: EmailFormState = { message: null, success: false, errors: {} };
+  const [state, formAction] = useFormState(submitForm, initialState);
 
-export default function Feedback() {
-  // Initial state for the feedback form
-  const initialState: FeedbackFormState = { message: null, success: false, errors: {} };
-  const [state, formAction] = useFormState(submitFeedback, initialState);
+  // Construct aria-describedby based on state for the input field
+  const describedByIds = [
+      state?.errors?.email ? 'email-field-error' : undefined,
+      state?.message && !state.errors?.email && !state.success ? 'email-general-error' : undefined
+  ].filter(Boolean).join(' ');
 
   return (
-    <div className="flex min-h-screen flex-col bg-black text-white">
-       <header className="container mx-auto flex h-16 items-center justify-between px-4">
+    <div className="flex h-screen flex-col bg-background text-foreground overflow-hidden">
+      <header className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-2">
-           {/* Use Curator details */}
-          <Waveform className="h-6 w-6 text-cyan-400" /> {/* Use new accent */}
+          <Waveform className="h-6 w-6 text-accent-cyan" />
           <span className="text-xl font-bold">curator</span>
         </div>
-        <Link href="/" className="flex items-center text-sm text-gray-400 hover:text-white">
-          <ArrowLeft className="mr-1 h-4 w-4" />
-          Back to Home
-        </Link>
+        <div className="flex items-center gap-4">
+          {/* Mode Toggle */}
+          {/* <ModeToggle /> */}
+          
+          <Link
+            href="/how-to-use"
+            className="flex items-center gap-1.5 text-sm font-medium text-accent-cyan hover:text-accent-cyan/80 transition-colors"
+          >
+            <HelpCircle className="h-5 w-5" />
+            How to Use
+          </Link>
+        </div>
       </header>
 
-      <main className="flex-1 flex items-center justify-center py-8">
-        <div className="container mx-auto px-4 max-w-md">
-          <div className="space-y-6 p-8 rounded-xl border border-gray-800 bg-gray-900/30">
-            <div className="text-center">
-               {/* Update title/desc for Curator */}
-              <h1 className="text-2xl font-bold">We Value Your Feedback</h1>
-              <p className="mt-2 text-gray-400">Help us improve Curator by sharing your thoughts and suggestions.</p>
+      <main className="flex-1 flex items-center justify-center">
+        <div className="container mx-auto px-4 flex flex-col items-center">
+          <div className="max-w-md w-full flex flex-col items-center text-center">
+            <div className="space-y-4 mb-8">
+              <h1 className="text-4xl font-bold tracking-tighter md:text-5xl">
+                Find Your Sound. <span className="text-accent-cyan">Instantly.</span>
+              </h1>
+              <p className="text-muted-foreground">
+                Manage your Vital presets, Serum patches, and audio samples across your library.
+              </p>
             </div>
 
-            {/* Updated form using useFormState */}
-            <form action={formAction} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-sm font-medium">
-                  Email Address
-                </Label>
-                <Input
-                  id="email"
-                  name="email" // Name matches FormData key
-                  type="email"
-                  placeholder="your@email.com"
-                  required
-                  aria-describedby="email-error"
-                  className="border-gray-800 bg-gray-900 text-white placeholder:text-gray-500 focus:border-cyan-500 focus:ring-cyan-500" // Use new accent
-                />
-                 {/* Display email validation errors */}
-                {state?.errors?.email && (
-                  <p id="email-error" className="text-sm text-red-500 mt-1">
-                    {state.errors.email.join(', ')}
-                  </p>
-                )}
-              </div>
+            {/* --- Conditional Rendering Section --- */}
+            <div className="w-full flex flex-col items-center space-y-6 p-6 rounded-xl border border-border bg-card/80 backdrop-blur-sm">
+              {/* SHOW FORM IF NOT SUCCESSFUL */}
+              {!state.success && (
+                <>
+                  <div className="text-center">
+                    <h2 className="text-2xl font-bold">Download curator Beta</h2>
+                    <p className="mt-1 text-sm text-muted-foreground">Enter your email to get the download link</p>
+                  </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="feedback" className="text-sm font-medium">
-                  Your Feedback
-                </Label>
-                <Textarea
-                  id="feedback"
-                  name="feedback" // Name matches FormData key
-                  placeholder="Share your experience, suggestions, or report issues..."
-                  required
-                  aria-describedby="feedback-error"
-                  className="min-h-[150px] border-gray-800 bg-gray-900 text-white placeholder:text-gray-500 focus:border-cyan-500 focus:ring-cyan-500" // Use new accent
-                />
-                {/* Display feedback validation errors */}
-                {state?.errors?.feedback && (
-                    <p id="feedback-error" className="text-sm text-red-500 mt-1">
-                        {state.errors.feedback.join(', ')}
-                    </p>
-                )}
-              </div>
+                  <form action={formAction} className="w-full space-y-4">
+                    <div className="space-y-2 text-left">
+                      <Label htmlFor="email" className="sr-only">Email Address</Label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="Enter your email"
+                        required
+                        aria-describedby={describedByIds || undefined}
+                        aria-invalid={!!state?.errors?.email}
+                        className="h-12 border-border bg-card text-foreground placeholder:text-muted-foreground/50 focus:border-ring focus:ring-ring"
+                      />
+                      {state?.errors?.email && (
+                        <p id="email-field-error" className="text-sm text-destructive mt-1">
+                          {state.errors.email.join(', ')}
+                        </p>
+                      )}
+                      {state?.message && !state.success && !state.errors?.email && (
+                         <p id="email-general-error" className='text-sm mt-1 text-destructive'>
+                            {state.message}
+                         </p>
+                       )}
+                    </div>
+                    <SubmitButton />
+                  </form>
+                  <p className="text-xs text-muted-foreground">We'll email you the link. By submitting, you agree to our Terms.</p>
+                </>
+              )}
 
-              <FeedbackSubmitButton /> {/* Use the dedicated submit button */}
+              {/* SHOW SUCCESS MESSAGE AND DOWNLOAD BUTTONS IF SUCCESSFUL */}
+              {state.success && (
+                <div className="w-full space-y-4 text-center">
+                   <h2 className="text-2xl font-bold text-green-400">Success!</h2>
+                   {state.message && (
+                     <p className='text-sm mt-1 text-green-400'>
+                        {state.message} {/* Success message from the action */}
+                     </p>
+                   )}
+                   <p className="text-muted-foreground mt-2 mb-4">Download curator for your platform:</p>
+                   <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                      {/* --- Updated Download Buttons --- */}
+                      <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                        <a href="/downloads/curator-setup-win.exe" download="curator-setup-win.exe">
+                          <MonitorIcon className="mr-2 h-4 w-4" /> Windows
+                        </a>
+                      </Button>
 
-              {/* Display general form messages (success or failure) */}
-               {state?.message && !state.errors?.email && !state.errors?.feedback && (
-                 <p className={`text-sm mt-2 ${state.success ? 'text-green-500' : 'text-red-500'}`}>
-                    {state.message}
-                 </p>
-               )}
-            </form>
+                      <Button asChild className="bg-secondary hover:bg-secondary/90 text-secondary-foreground">
+                        <a href="/downloads/curator-mac.dmg" download="curator-mac.dmg">
+                          <Apple className="mr-2 h-4 w-4" /> macOS
+                        </a>
+                      </Button>
+                      {/* --- End Updated Download Buttons --- */}
+                   </div>
+                </div>
+              )}
+            </div>
+             {/* --- End Conditional Rendering Section --- */}
+
+            <Button
+              asChild
+              variant="outline"
+              className="mt-6"
+            >
+              <Link href="/feedback" className="flex items-center gap-2">
+                <MessageSquare className="h-4 w-4" />
+                Provide Feedback
+              </Link>
+            </Button>
           </div>
         </div>
       </main>
 
-      <footer className="border-t border-gray-800 py-2">
-        <div className="container mx-auto px-4 text-center text-xs text-gray-500">
-          {/* Update company name */}
+      <footer className="border-t border-border py-2">
+        <div className="container mx-auto px-4 text-center text-xs text-muted-foreground">
           © {new Date().getFullYear()} a tier. All rights reserved.
         </div>
       </footer>

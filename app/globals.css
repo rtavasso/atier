@@ -4,55 +4,97 @@
 @tailwind utilities;
 
 :root {
-  /* Dark Theme - Ableton Inspired */
-  --background: 224 71% 4%; /* Very Dark Blue/Gray */
-  --foreground: 210 40% 98%; /* Almost White */
+  /* Light Theme - TE Inspired Base */
+  --background: 240 0% 96%; /* #F5F5F5 Light Gray */
+  --foreground: 240 6% 10%; /* Near Black */
 
-  --card: 222 47% 11%; /* Dark Slate Blue/Gray */
-  --card-foreground: 210 40% 98%; /* Almost White */
+  --card: 0 0% 100%; /* White */
+  --card-foreground: 240 6% 10%; /* Near Black */
 
-  --popover: 222 47% 11%; /* Dark Slate Blue/Gray */
-  --popover-foreground: 210 40% 98%; /* Almost White */
+  --popover: 0 0% 100%; /* White */
+  --popover-foreground: 240 6% 10%; /* Near Black */
 
-  --primary: 198 93% 60%; /* Bright Cyan/Teal */
-  --primary-foreground: 222 47% 11%; /* Dark color for text on primary */
+  /* Primary: Ableton Blue (muted/desaturated for light mode?) */
+  /* Let's use a less intense blue for light mode primary text/elements */
+  --primary: 220 60% 50%; /* A reasonable blue */
+  --primary-foreground: 0 0% 100%; /* White text on primary */
 
-  --secondary: 217 33% 17%; /* Muted Blue/Gray */
-  --secondary-foreground: 210 40% 98%; /* Almost White */
+  /* Secondary: TE Orange-Red */
+  --secondary: 25 100% 50%; /* #FF6D00 */
+  --secondary-foreground: 0 0% 100%; /* White text on secondary */
 
-  --muted: 217 33% 17%; /* Muted Blue/Gray */
-  --muted-foreground: 215 20% 65%; /* Lighter Gray */
+  --muted: 240 5% 90%; /* Slightly darker gray */
+  --muted-foreground: 240 4% 46%; /* Gray text */
 
-  --accent: 198 93% 60%; /* Bright Cyan/Teal (Same as primary) */
-  --accent-foreground: 222 47% 11%; /* Dark color for text on accent */
+  /* Accent: Use TE Orange-Red as default, add others */
+  --accent: 25 100% 50%; /* #FF6D00 */
+  --accent-foreground: 0 0% 100%; /* White text on accent */
+  --accent-yellow: 50 100% 55%; /* #FFE81A */
+  --accent-cyan: 180 100% 50%; /* #00FFFF */
 
   --destructive: 0 84% 60%; /* Red */
-  --destructive-foreground: 210 40% 98%; /* Almost White */
+  --destructive-foreground: 0 0% 100%; /* White */
 
-  --border: 217 33% 17%; /* Muted Blue/Gray */
-  --input: 217 33% 17%; /* Muted Blue/Gray */
-  --ring: 198 93% 60%; /* Bright Cyan/Teal (Same as primary) */
+  --border: 240 6% 88%; /* Light Gray Border */
+  --input: 240 6% 88%; /* Light Gray Input */
+  --ring: 220 60% 50%; /* Primary blue for focus rings */
 
-  --radius: 0.5rem; /* Example border radius */
+  --radius: 0.25rem; /* Minimal rounding */
+  
+  /* Font variable names */
+  --font-inter: "__Inter_Fallback_xxxxxx"; /* Keep existing variable name */
+  /* JetBrains Mono is set up via the variable in layout.tsx */
 }
 
-/* Optional: Default to dark mode if desired */
-/*
-:root {
-  color-scheme: dark;
-}
-*/
+.dark {
+  /* Dark Theme - Ableton/TE Blend */
+  --background: 240 3% 11%; /* #1E1E1E Dark Gray */
+  --foreground: 0 0% 98%; /* Almost White */
 
-/* If you want light mode support, define variables inside .light class or [data-theme="light"] */
-/*
-.light {
-  --background: 0 0% 100%;
-  --foreground: 222.2 84% 4.9%;
-  // ... define all other variables for light mode ...
-}
-*/
+  --card: 240 3% 15%; /* Slightly lighter dark */
+  --card-foreground: 0 0% 98%; /* Almost White */
 
+  --popover: 240 3% 11%; /* Dark Gray */
+  --popover-foreground: 0 0% 98%; /* Almost White */
+
+  /* Primary: Ableton Blue (using RGBA to HSL approx) */
+  /* rgba(0, 0, 255, 0.7) -> hsl(240, 100%, 50%) - but needs adjustment for 70% opacity feel */
+  /* Let's try a slightly desaturated, darker blue */
+  --primary: 240 70% 65%; /* Adjust saturation/lightness for the 70% opacity feel */
+  --primary-foreground: 0 0% 98%; /* White text on primary */
+
+  /* Secondary: TE Orange-Red */
+  --secondary: 25 100% 50%; /* #FF6D00 */
+  --secondary-foreground: 0 0% 100%; /* White text on secondary */
+
+  --muted: 240 3% 20%; /* Darker Muted Gray */
+  --muted-foreground: 240 4% 65%; /* Lighter Gray Text */
+
+  /* Accent: Use TE Orange-Red as default, add others */
+  --accent: 25 100% 50%; /* #FF6D00 */
+  --accent-foreground: 0 0% 100%; /* White text on accent */
+  --accent-yellow: 50 100% 55%; /* #FFE81A */
+  --accent-cyan: 180 100% 50%; /* #00FFFF */
+
+  --destructive: 0 70% 50%; /* Darker Red */
+  --destructive-foreground: 0 0% 98%; /* Almost White */
+
+  --border: 240 3% 25%; /* Dark Border */
+  --input: 240 3% 25%; /* Dark Input */
+  --ring: 25 100% 50%; /* Secondary orange for focus rings in dark mode */
+
+  --radius: 0.25rem; /* Minimal rounding */
+}
+
+/* Apply base background/text colors */
 body {
   background-color: hsl(var(--background));
   color: hsl(var(--foreground));
+  /* Apply Inter font globally */
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* Style for monospace elements */
+.font-mono {
+  font-family: var(--font-jetbrains-mono), monospace;
 }

@@ -5,15 +5,16 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from '@/components/ui/label'; // Import Label
-import { AudioWaveformIcon as Waveform, Mail, MessageSquare, HelpCircle } from "lucide-react";
+import { AudioWaveformIcon as Waveform, Mail, MessageSquare, HelpCircle, Sliders } from "lucide-react";
 import Link from "next/link";
 import { submitForm, type EmailFormState } from '@/app/actions/formActions'; // Import action and state type
+import { ModeToggle } from "@/components/ui/mode-toggle"; // Import ModeToggle
 
 // Define SubmitButton within or import if used elsewhere
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
-    <Button type="submit" className="w-full h-12 bg-purple-600 text-white hover:bg-purple-700" aria-disabled={pending} disabled={pending}>
+    <Button type="submit" className="w-full h-12 bg-secondary text-secondary-foreground hover:bg-secondary/90" aria-disabled={pending} disabled={pending}>
       <Mail className="mr-2 h-4 w-4" />
       {pending ? 'Submitting...' : 'Get Access'}
     </Button>
@@ -26,41 +27,72 @@ export default function Home() {
   const [state, formAction] = useFormState(submitForm, initialState);
 
   return (
-    <div className="flex h-screen flex-col bg-black text-white overflow-hidden">
+    <div className="flex h-screen flex-col bg-background text-foreground overflow-hidden">
       <header className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-2">
-          {/* Use Curator details */}
-          <Waveform className="h-6 w-6 text-cyan-400" /> {/* Use new accent */}
+          {/* Update branding to curator */}
+          <Waveform className="h-6 w-6 text-accent-cyan" /> 
           <span className="text-xl font-bold">curator</span>
         </div>
-        {/* Keep How to Use Link */}
-         <Link
-           href="/how-to-use" // Make sure this page exists or remove link
-           className="flex items-center gap-1.5 text-sm font-medium text-cyan-400 hover:text-cyan-300 transition-colors"
-         >
-           <HelpCircle className="h-5 w-5" />
-           How to Use
-         </Link>
+        
+        <div className="flex items-center gap-4">
+          {/* Mode Toggle */}
+          {/* <ModeToggle /> */}
+          
+          {/* How to Use Link */}
+          <Link
+            href="/how-to-use" // Make sure this page exists or remove link
+            className="flex items-center gap-1.5 text-sm font-medium text-accent-cyan hover:text-accent-cyan/80 transition-colors"
+          >
+            <HelpCircle className="h-5 w-5" />
+            How to Use
+          </Link>
+        </div>
       </header>
 
       <main className="flex-1 flex items-center justify-center">
         <div className="container mx-auto px-4 flex flex-col items-center">
           <div className="max-w-md w-full flex flex-col items-center text-center">
             <div className="space-y-4 mb-8">
-              {/* Update heading for Curator */}
+              {/* Update heading for curator */}
               <h1 className="text-4xl font-bold tracking-tighter md:text-5xl">
-                Find Your Sound. <span className="text-cyan-400">Instantly.</span> {/* Use new accent */}
+                Find Your Sound. <span className="text-accent-cyan">Instantly.</span>
               </h1>
-              <p className="text-gray-400">
+              <p className="text-muted-foreground">
                 Manage your Vital presets, Serum patches, and audio samples across your library.
               </p>
+              
+              {/* Sample Parameters Display */}
+              <div className="flex justify-center space-x-4 mt-4">
+                <div className="bg-card border border-border rounded-md px-3 py-2 flex items-center">
+                  <Sliders className="text-accent-yellow h-4 w-4 mr-2" />
+                  <div className="flex flex-col items-start">
+                    <span className="text-xs text-muted-foreground">BPM</span>
+                    <span className="font-mono text-lg">120.0</span>
+                  </div>
+                </div>
+                <div className="bg-card border border-border rounded-md px-3 py-2 flex items-center">
+                  <Sliders className="text-accent h-4 w-4 mr-2" />
+                  <div className="flex flex-col items-start">
+                    <span className="text-xs text-muted-foreground">KEY</span>
+                    <span className="font-mono text-lg">A min</span>
+                  </div>
+                </div>
+                <div className="bg-card border border-border rounded-md px-3 py-2 flex items-center">
+                  <Sliders className="text-accent-cyan h-4 w-4 mr-2" />
+                  <div className="flex flex-col items-start">
+                    <span className="text-xs text-muted-foreground">TIME</span>
+                    <span className="font-mono text-lg">4/4</span>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="w-full flex flex-col items-center space-y-6 p-6 rounded-xl border border-gray-800 bg-gray-900/30 backdrop-blur-sm">
+            <div className="w-full flex flex-col items-center space-y-6 p-6 rounded-xl border border-border bg-card/80 backdrop-blur-sm">
               <div className="text-center">
                  {/* Update call to action */}
-                <h2 className="text-2xl font-bold">Download Curator Beta</h2>
-                <p className="mt-1 text-sm text-gray-400">Enter your email to get the download link</p>
+                <h2 className="text-2xl font-bold">Download curator Beta</h2>
+                <p className="mt-1 text-sm text-muted-foreground">Enter your email to get the download link</p>
               </div>
 
               {/* Updated form using useFormState */}
@@ -74,17 +106,17 @@ export default function Home() {
                     placeholder="Enter your email"
                     required
                     aria-describedby="email-error-message email-success-message"
-                    className="h-12 border-gray-800 bg-gray-900 text-white placeholder:text-gray-500 focus:border-cyan-500 focus:ring-cyan-500" // Use new accent
+                    className="h-12 border-border bg-card text-foreground placeholder:text-muted-foreground/50 focus:border-ring focus:ring-ring"
                   />
                   {/* Display validation errors */}
                   {state?.errors?.email && (
-                    <p id="email-error-message" className="text-sm text-red-500 mt-1">
+                    <p id="email-error-message" className="text-sm text-destructive mt-1">
                       {state.errors.email.join(', ')}
                     </p>
                   )}
                    {/* Display general form messages (success or specific non-field errors) */}
                   {state?.message && !state.errors?.email && (
-                    <p id={state.success ? "email-success-message" : "email-error-message"} className={`text-sm mt-1 ${state.success ? 'text-green-500' : 'text-red-500'}`}>
+                    <p id={state.success ? "email-success-message" : "email-error-message"} className={`text-sm mt-1 ${state.success ? 'text-green-500' : 'text-destructive'}`}>
                        {state.message}
                     </p>
                   )}
@@ -92,13 +124,13 @@ export default function Home() {
                 <SubmitButton /> {/* Use the dedicated submit button component */}
               </form>
 
-              <p className="text-xs text-gray-500">By downloading, you agree to our Terms of Service</p>
+              <p className="text-xs text-muted-foreground">By downloading, you agree to our Terms of Service</p>
             </div>
 
             <Button
               asChild
               variant="outline"
-              className="mt-6 border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-white"
+              className="mt-6"
             >
               <Link href="/feedback" className="flex items-center gap-2">
                 <MessageSquare className="h-4 w-4" />
@@ -109,9 +141,9 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className="border-t border-gray-800 py-2">
-        <div className="container mx-auto px-4 text-center text-xs text-gray-500">
-           {/* Update company name */}
+      <footer className="border-t border-border py-2">
+        <div className="container mx-auto px-4 text-center text-xs text-muted-foreground">
+           {/* Keep company name */}
           © {new Date().getFullYear()} a tier. All rights reserved.
         </div>
       </footer>

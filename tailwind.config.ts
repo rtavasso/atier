@@ -44,8 +44,10 @@ const config = {
           foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
+          DEFAULT: "hsl(var(--accent))", // Default accent (TE Orange)
           foreground: "hsl(var(--accent-foreground))",
+          yellow: "hsl(var(--accent-yellow))", // Specific accent
+          cyan: "hsl(var(--accent-cyan))",     // Specific accent
         },
         popover: {
           DEFAULT: "hsl(var(--popover))",
@@ -65,8 +67,12 @@ const config = {
       },
       borderRadius: {
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        md: "calc(var(--radius) - 1px)",
+        sm: "calc(var(--radius) - 2px)",
+      },
+      fontFamily: {
+        sans: ['var(--font-inter)', 'sans-serif'],
+        mono: ['var(--font-jetbrains-mono)', 'monospace'], // Will be configured in Phase 3
       },
       keyframes: {
         "accordion-down": {

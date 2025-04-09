@@ -8,13 +8,28 @@ import { z } from 'zod';
 const EmailFormSchema = z.object({
   email: z.string().email({ message: 'Invalid email address.' }),
 });
-export type EmailFormState = { /* ... */ };
+export type EmailFormState = { 
+  message: string | null;
+  success: boolean;
+  errors?: {
+    email?: string[];
+    [key: string]: string[] | undefined;
+  };
+};
 
 const FeedbackFormSchema = z.object({
   email: z.string().email({ message: 'Please enter a valid email address.' }),
   feedback: z.string().min(10, { message: 'Feedback must be at least 10 characters long.' }),
 });
-export type FeedbackFormState = { /* ... */ };
+export type FeedbackFormState = { 
+  message: string | null;
+  success: boolean;
+  errors?: {
+    email?: string[];
+    feedback?: string[];
+    [key: string]: string[] | undefined;
+  };
+};
 
 
 // --- Redis Client Initialization (Updated) ---
