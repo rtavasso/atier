@@ -95,7 +95,7 @@ export async function submitForm(
     await redisClient.set(`signup:${uniqueId}`, JSON.stringify(submissionData));
     await redisClient.sAdd('signup_emails', email);
     console.log('Email signup saved successfully to Redis for:', email);
-    return { message: 'Thank you! Check your email for the download link.', success: true };
+    return { message: '', success: true };
   } catch (error) {
     console.error('Redis Error (Email Signup):', error);
     return { message: `Server error: ${error instanceof Error ? error.message : 'Could not save email signup.'}`, success: false };
