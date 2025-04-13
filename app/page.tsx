@@ -11,7 +11,6 @@ import Link from "next/link";
 import { submitForm, type EmailFormState } from '@/app/actions/formActions'; // Import action and state type
 import { ModeToggle } from "@/components/ui/mode-toggle"; // Import ModeToggle
 import { DownloadButton } from '@/components/ui/DownloadButton'; // *** IMPORT DownloadButton ***
-import { SiApple, SiMicrosoftwindows } from 'react-icons/si';
 
 // Define SubmitButton within or import if used elsewhere
 function SubmitButton() {
@@ -148,13 +147,13 @@ export default function Home() {
                       href="/downloads/curator-macos.dmg" // Correct path from public folder
                       filename="curator-macos.dmg"     // Suggested filename for download
                     >
-                      <SiApple className="mr-2 h-4 w-4" /> Download for macOS
+                      <DownloadCloud className="mr-2 h-4 w-4" /> Download for macOS
                     </DownloadButton>
                     <DownloadButton
                       href="/downloads/curator-windows.exe" // Correct path from public folder
                       filename="curator-windows.exe"     // Suggested filename for download
                     >
-                      <SiMicrosoftwindows className="mr-2 h-4 w-4" /> Download for Windows
+                      <DownloadCloud className="mr-2 h-4 w-4" /> Download for Windows
                     </DownloadButton>
                   </div>
                    <p className="text-xs text-muted-foreground pt-2">Check your email for updates.</p> {/* Optional extra info */}
