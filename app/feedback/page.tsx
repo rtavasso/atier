@@ -5,41 +5,37 @@ import { useFormState, useFormStatus } from 'react-dom';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea'; // Import Textarea
 // Import specific OS icons and Download icon
-import { AudioWaveformIcon as Waveform, Mail, MessageSquare, HelpCircle, Download, Apple, MonitorIcon } from "lucide-react";
+import { AudioWaveformIcon as Waveform, Mail, MessageSquare, HelpCircle } from "lucide-react";
 import Link from "next/link";
-import { submitForm, type EmailFormState } from '@/app/actions/formActions';
-import { DownloadButton } from '@/components/ui/DownloadButton'; // Import the DownloadButton component
+import { submitFeedback, type FeedbackFormState } from '@/app/actions/formActions';
 import { ModeToggle } from "@/components/ui/mode-toggle"; // Import ModeToggle
 
-// SubmitButton for the email form
-function SubmitButton() {
+// SubmitButton for the feedback form
+function FeedbackSubmitButton() {
   const { pending } = useFormStatus();
   return (
     <Button type="submit" className="w-full h-12 bg-primary text-primary-foreground hover:bg-primary/90" aria-disabled={pending} disabled={pending}>
-      <Mail className="mr-2 h-4 w-4" />
-      {pending ? 'Submitting...' : 'Get Download Link'}
+      <MessageSquare className="mr-2 h-4 w-4" />
+      {pending ? 'Submitting...' : 'Submit Feedback'}
     </Button>
   );
 }
 
 export default function Home() {
-  const initialState: EmailFormState = { message: null, success: false, errors: {} };
-  const [state, formAction] = useFormState(submitForm, initialState);
-
-  // Construct aria-describedby based on state for the input field
-  const describedByIds = [
-      state?.errors?.email ? 'email-field-error' : undefined,
-      state?.message && !state.errors?.email && !state.success ? 'email-general-error' : undefined
-  ].filter(Boolean).join(' ');
+  const initialFeedbackState: FeedbackFormState = { message: null, success: false, errors: {} };
+  const [state, formAction] = useFormState(submitFeedback, initialFeedbackState);
 
   return (
     <div className="flex h-screen flex-col bg-background text-foreground overflow-hidden">
       <header className="container mx-auto flex h-16 items-center justify-between px-4">
-        <div className="flex items-center gap-2">
-          <Waveform className="h-6 w-6 text-accent-cyan" />
-          <span className="text-xl font-bold">curator</span>
-        </div>
+        <Link href="/" className="flex items-center gap-2 text-foreground hover:text-foreground/80 transition-colors">
+          <div className="flex items-center gap-2">
+            <Waveform className="h-6 w-6 text-accent-cyan" />
+            <span className="text-xl font-bold">curator</span>
+          </div>
+        </Link>
         <div className="flex items-center gap-4">
           {/* Mode Toggle */}
           {/* <ModeToggle /> */}
@@ -62,7 +58,7 @@ export default function Home() {
                 Find Your Sound. <span className="text-accent-cyan">Instantly.</span>
               </h1>
               <p className="text-muted-foreground">
-                Manage your Vital presets, Serum patches, and audio samples across your library.
+                Navigate your sample library with sound rather than words.
               </p>
             </div>
 
@@ -72,65 +68,78 @@ export default function Home() {
               {!state.success && (
                 <>
                   <div className="text-center">
-                    <h2 className="text-2xl font-bold">Download curator Beta</h2>
-                    <p className="mt-1 text-sm text-muted-foreground">Enter your email to get the download link</p>
+                    <h2 className="text-2xl font-bold">Provide Feedback</h2>
+                    <p className="mt-1 text-sm text-muted-foreground">Let us know what you think!</p>
                   </div>
 
                   <form action={formAction} className="w-full space-y-4">
+                    {/* Email Input */}
                     <div className="space-y-2 text-left">
-                      <Label htmlFor="email" className="sr-only">Email Address</Label>
+                      <Label htmlFor="email">Your Email</Label>
                       <Input
                         id="email"
                         name="email"
                         type="email"
-                        placeholder="Enter your email"
+                        placeholder="you@example.com"
                         required
-                        aria-describedby={describedByIds || undefined}
+                        aria-describedby="feedback-email-error"
                         aria-invalid={!!state?.errors?.email}
                         className="h-12 border-border bg-card text-foreground placeholder:text-muted-foreground/50 focus:border-ring focus:ring-ring"
                       />
                       {state?.errors?.email && (
-                        <p id="email-field-error" className="text-sm text-destructive mt-1">
+                        <p id="feedback-email-error" className="text-sm text-destructive mt-1">
                           {state.errors.email.join(', ')}
                         </p>
                       )}
-                      {state?.message && !state.success && !state.errors?.email && (
-                         <p id="email-general-error" className='text-sm mt-1 text-destructive'>
-                            {state.message}
-                         </p>
-                       )}
                     </div>
-                    <SubmitButton />
+
+                    {/* Feedback Textarea */}
+                    <div className="space-y-2 text-left">
+                      <Label htmlFor="feedback">Your Feedback</Label>
+                      <Textarea
+                        id="feedback"
+                        name="feedback"
+                        placeholder="Tell us how we can improve..."
+                        required
+                        rows={4}
+                        aria-describedby="feedback-text-error"
+                        aria-invalid={!!state?.errors?.feedback}
+                        className="border-border bg-card text-foreground placeholder:text-muted-foreground/50 focus:border-ring focus:ring-ring"
+                      />
+                      {state?.errors?.feedback && (
+                        <p id="feedback-text-error" className="text-sm text-destructive mt-1">
+                          {state.errors.feedback.join(', ')}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Display general form messages */}
+                    {state?.message && !state.errors?.email && !state.errors?.feedback && (
+                      <p id="feedback-general-message" className={`text-sm mt-1 ${state.success ? 'text-green-500' : 'text-destructive'}`}>
+                         {state.message}
+                      </p>
+                    )}
+
+                    {/* Update Submit Button */}
+                    <FeedbackSubmitButton />
                   </form>
-                  <p className="text-xs text-muted-foreground">We'll email you the link. By submitting, you agree to our Terms.</p>
+                  <p className="text-xs text-muted-foreground">Thank you for helping make curator better.</p>
                 </>
               )}
 
-              {/* SHOW SUCCESS MESSAGE AND DOWNLOAD BUTTONS IF SUCCESSFUL */}
+              {/* SHOW SUCCESS MESSAGE IF SUCCESSFUL */}
               {state.success && (
                 <div className="w-full space-y-4 text-center">
-                   <h2 className="text-2xl font-bold text-green-400">Success!</h2>
+                   <h2 className="text-2xl font-bold text-green-400">Feedback Sent!</h2>
                    {state.message && (
                      <p className='text-sm mt-1 text-green-400'>
                         {state.message} {/* Success message from the action */}
                      </p>
                    )}
-                   <p className="text-muted-foreground mt-2 mb-4">Download curator for your platform:</p>
-                   <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                      {/* --- Updated Download Buttons --- */}
-                      <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                        <a href="/downloads/curator-setup-win.exe" download="curator-setup-win.exe">
-                          <MonitorIcon className="mr-2 h-4 w-4" /> Windows
-                        </a>
-                      </Button>
-
-                      <Button asChild className="bg-secondary hover:bg-secondary/90 text-secondary-foreground">
-                        <a href="/downloads/curator-mac.dmg" download="curator-mac.dmg">
-                          <Apple className="mr-2 h-4 w-4" /> macOS
-                        </a>
-                      </Button>
-                      {/* --- End Updated Download Buttons --- */}
-                   </div>
+                   <p className="text-muted-foreground mt-2">We appreciate your input.</p>
+                   <Button variant="outline" asChild className="mt-4">
+                     <Link href="/">Back to Home</Link>
+                   </Button>
                 </div>
               )}
             </div>
@@ -141,9 +150,9 @@ export default function Home() {
               variant="outline"
               className="mt-6"
             >
-              <Link href="/feedback" className="flex items-center gap-2">
-                <MessageSquare className="h-4 w-4" />
-                Provide Feedback
+              <Link href="/" className="flex items-center gap-2">
+                <Waveform className="h-4 w-4" />
+                Back to Home
               </Link>
             </Button>
           </div>

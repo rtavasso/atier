@@ -23,19 +23,3 @@ export function DownloadButton({ href, children, filename }: DownloadButtonProps
     </Button>
   );
 }
-
-// Example Usage in another component:
-// import { DownloadButton } from '@/components/ui/DownloadButton';
-//
-// function MyPage() {
-//   return (
-//     <div>
-//       <DownloadButton href="/downloads/curator-installer.exe" filename="curator-setup-v1.exe">
-//         Download Curator for Windows
-//       </DownloadButton>
-//       <DownloadButton href="/downloads/vital-pack-1.zip">
-//         Download Vital Patches Vol. 1
-//       </DownloadButton>
-//     </div>
-//   );
-// }

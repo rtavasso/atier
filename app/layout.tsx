@@ -13,8 +13,8 @@ const jetbrainsMono = JetBrains_Mono({
 
 // Updated Metadata
 export const metadata: Metadata = {
-  title: "curator - Sample & Patch Library Manager by a tier", // Updated Title
-  description: "Find your Vital presets, Serum presets, and audio samples instantly. curator helps manage your sound library across different synths and formats.", // Updated Description
+  title: "curator - Sample Library Manager by a tier", // Updated Title
+  description: "Navigate your sample library with sound rather than words.", // Updated Description
   generator: 'v0.dev' // Keep or update as needed
 }
 

@@ -29,11 +29,13 @@ export default function Home() {
   return (
     <div className="flex h-screen flex-col bg-background text-foreground overflow-hidden">
       <header className="container mx-auto flex h-16 items-center justify-between px-4">
-        <div className="flex items-center gap-2">
-          {/* Update branding to curator */}
-          <Waveform className="h-6 w-6 text-accent-cyan" /> 
-          <span className="text-xl font-bold">curator</span>
-        </div>
+        <Link href="/" className="flex items-center gap-2 text-foreground hover:text-foreground/80 transition-colors">
+          <div className="flex items-center gap-2">
+            {/* Update branding to curator */}
+            <Waveform className="h-6 w-6 text-accent-cyan" /> 
+            <span className="text-xl font-bold">curator</span>
+          </div>
+        </Link>
         
         <div className="flex items-center gap-4">
           {/* Mode Toggle */}
@@ -56,10 +58,10 @@ export default function Home() {
             <div className="space-y-4 mb-8">
               {/* Update heading for curator */}
               <h1 className="text-4xl font-bold tracking-tighter md:text-5xl">
-                Find Your Sound. <span className="text-accent-cyan">Instantly.</span>
+                Search with <span className="text-accent-cyan">Sound.</span>
               </h1>
               <p className="text-muted-foreground">
-                Manage your Vital presets, Serum patches, and audio samples across your library.
+                Navigate your sample library with sound, and filter by automatically generated tags.
               </p>
               
               {/* Sample Parameters Display */}

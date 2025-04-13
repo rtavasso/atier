@@ -8,10 +8,12 @@ export default function HowToUse() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="container mx-auto flex h-16 items-center justify-between px-4 border-b border-border">
-        <div className="flex items-center gap-2">
-          <Waveform className="h-6 w-6 text-primary" />
-          <span className="text-xl font-bold">curator</span>
-        </div>
+        <Link href="/" className="flex items-center gap-2 text-foreground hover:text-foreground/80 transition-colors">
+          <div className="flex items-center gap-2">
+            <Waveform className="h-6 w-6 text-primary" />
+            <span className="text-xl font-bold">curator</span>
+          </div>
+        </Link>
         <div className="flex items-center gap-4">
           {/* <ModeToggle /> */}
           <Link href="/" className="flex items-center text-sm text-muted-foreground hover:text-foreground">
@@ -25,9 +27,6 @@ export default function HowToUse() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold mb-4">How to Use curator</h1>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Follow these simple steps to get started with curator and begin creating professional music in minutes.
-            </p>
           </div>
 
           <div className="space-y-16">
@@ -54,19 +53,6 @@ export default function HowToUse() {
                         <span>Requires minimum 4GB RAM, 2GHz processor</span>
                       </li>
                     </ul>
-                    
-                    {/* Sample Terminal Command */}
-                    <div className="mt-4 bg-card rounded-md border border-border p-3">
-                      <div className="flex items-center text-muted-foreground text-sm mb-1">
-                        <Code className="h-4 w-4 mr-2" />
-                        <span>Terminal Installation</span>
-                      </div>
-                      <code className="font-mono text-xs block text-foreground whitespace-pre overflow-x-auto">
-                        $ cd ~/Downloads<br/>
-                        $ chmod +x ./curator-installer.sh<br/>
-                        $ ./curator-installer.sh
-                      </code>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -106,43 +92,13 @@ export default function HowToUse() {
                     <ul className="mt-4 space-y-2 text-muted-foreground">
                       <li className="flex items-start gap-2">
                         <span className="text-primary">•</span>
-                        <span>Track View: Where you arrange audio and MIDI clips</span>
+                        <span>Home: Where you find and filter samples from your library</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-primary">•</span>
-                        <span>Mixer: Control levels, panning, and effects</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-primary">•</span>
-                        <span>Browser: Access instruments, samples, and presets</span>
+                        <span>Library: Where you can manage your library and add new samples</span>
                       </li>
                     </ul>
-                    
-                    {/* Sample Keyboard Shortcuts */}
-                    <div className="mt-4 bg-card rounded-md border border-border p-3">
-                      <div className="flex items-center text-muted-foreground text-sm mb-1">
-                        <Code className="h-4 w-4 mr-2" />
-                        <span>Keyboard Shortcuts</span>
-                      </div>
-                      <div className="grid grid-cols-2 gap-2 text-sm">
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Play/Pause</span>
-                          <span className="font-mono text-foreground">Space</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Save</span>
-                          <span className="font-mono text-foreground">Ctrl+S</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Undo</span>
-                          <span className="font-mono text-foreground">Ctrl+Z</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Redo</span>
-                          <span className="font-mono text-foreground">Ctrl+Y</span>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -156,42 +112,24 @@ export default function HowToUse() {
                     3
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold mb-3">Create Your First Track</h2>
+                    <h2 className="text-2xl font-bold mb-3">Finding a Sample</h2>
                     <p className="text-muted-foreground">
-                      Start by creating a new project and adding your first track. You can record audio, add MIDI
-                      instruments, or import existing samples.
+                      Start by tracking a folder of samples and wait for the processing to complete. Each sample can take up to a second to process, so if you have a lot of samples, it may take a while, but you'll only have to do this once!
                     </p>
                     <ul className="mt-4 space-y-2 text-muted-foreground">
                       <li className="flex items-start gap-2">
                         <span className="text-primary">•</span>
-                        <span>Click "File &gt; New Project" to get started</span>
+                        <span>Go back to the home page and search for a sample you added by name</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-primary">•</span>
-                        <span>Add tracks using the "+" button in the track view</span>
+                        <span>Explore the similar samples, and filter them by BPM, timbre, and more</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-primary">•</span>
-                        <span>Drag and drop samples from the browser</span>
+                        <span>Once you find a sample you like, simply drag it into your DAW</span>
                       </li>
                     </ul>
-                    
-                    {/* Sample Configuration */}
-                    <div className="mt-4 bg-card rounded-md border border-border p-3">
-                      <div className="flex items-center text-muted-foreground text-sm mb-1">
-                        <Code className="h-4 w-4 mr-2" />
-                        <span>Project Configuration</span>
-                      </div>
-                      <code className="font-mono text-xs block text-foreground whitespace-pre overflow-x-auto">
-{`{
-  "projectName": "My First Track",
-  "bpm": 120,
-  "timeSignature": "4/4",
-  "sampleRate": 44100,
-  "bitDepth": 24
-}`}
-                      </code>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -205,65 +143,10 @@ export default function HowToUse() {
                 />
               </div>
             </div>
-
-            {/* Step 4 */}
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div className="bg-card rounded-xl overflow-hidden border border-border">
-                <Image
-                  src="/placeholder.svg?height=300&width=500"
-                  alt="Mixing and effects interface"
-                  width={500}
-                  height={300}
-                  className="w-full h-auto"
-                />
-              </div>
-              <div>
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary flex items-center justify-center text-2xl font-bold">
-                    4
-                  </div>
-                  <div>
-                    <h2 className="text-2xl font-bold mb-3">Mix and Master</h2>
-                    <p className="text-muted-foreground">
-                      Once you've created your tracks, use the mixer to balance levels, add effects, and master your
-                      final output.
-                    </p>
-                    <ul className="mt-4 space-y-2 text-muted-foreground">
-                      <li className="flex items-start gap-2">
-                        <span className="text-primary">•</span>
-                        <span>Access the mixer by clicking the "Mix" tab</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-primary">•</span>
-                        <span>Add effects by clicking the "+" in the effects rack</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <span className="text-primary">•</span>
-                        <span>Use the master channel for final output processing</span>
-                      </li>
-                    </ul>
-                    
-                    {/* Sample Effect Chain */}
-                    <div className="mt-4 bg-card rounded-md border border-border p-3">
-                      <div className="flex items-center text-muted-foreground text-sm mb-1">
-                        <Code className="h-4 w-4 mr-2" />
-                        <span>Effect Chain Example</span>
-                      </div>
-                      <code className="font-mono text-xs block text-foreground whitespace-pre overflow-x-auto">
-{`// Master Channel Effects
-1. EQ -> Low Cut @ 30Hz
-2. Compression -> 4:1 ratio
-3. Limiter -> -0.3dB ceiling`}
-                      </code>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
 
           <div className="mt-16 text-center">
-            <h2 className="text-2xl font-bold mb-4">Ready to Start Creating?</h2>
+            <h2 className="text-2xl font-bold mb-4">Ready to Start?</h2>
             <p className="text-muted-foreground mb-6">
               Now that you know the basics, it's time to unleash your creativity with curator.
             </p>
