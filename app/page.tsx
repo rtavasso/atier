@@ -64,7 +64,7 @@ export default function Home() {
                 Search with <span className="text-accent-cyan">Sound.</span>
               </h1>
               <p className="text-muted-foreground">
-                Find similar samples and filter them with intelligently.
+                Find similar samples and filter them intelligently.
               </p>
               <div className="flex justify-center space-x-4 mt-4">
                 <div className="bg-card border border-border rounded-md px-3 py-2 flex items-center">
