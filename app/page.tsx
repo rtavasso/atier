@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from '@/components/ui/label'; // Import Label
 // Import necessary icons
 import { AudioWaveformIcon as Waveform, Mail, MessageSquare, HelpCircle, Sliders, DownloadCloud } from "lucide-react";
+import { FaWindows } from "react-icons/fa"; // Import Windows icon
 import Link from "next/link";
 import { submitForm, type EmailFormState } from '@/app/actions/formActions'; // Import action and state type
 import { ModeToggle } from "@/components/ui/mode-toggle"; // Import ModeToggle
@@ -41,13 +42,16 @@ export default function Home() {
         
         <div className="flex items-center gap-4">
           {/* <ModeToggle /> */}
-          <Link
-            href="/how-to-use"
-            className="flex items-center gap-1.5 text-sm font-medium text-accent-cyan hover:text-accent-cyan/80 transition-colors"
+          <Button
+            asChild
+            variant="default"
+            className="bg-accent-cyan text-white hover:bg-accent-cyan/90 font-medium px-4 py-2"
           >
-            <HelpCircle className="h-5 w-5" />
-            How to Use
-          </Link>
+            <Link href="/how-to-use" className="flex items-center gap-1.5">
+              <HelpCircle className="h-5 w-5" />
+              How to Use
+            </Link>
+          </Button>
         </div>
       </header>
 
@@ -60,7 +64,7 @@ export default function Home() {
                 Search with <span className="text-accent-cyan">Sound.</span>
               </h1>
               <p className="text-muted-foreground">
-                Navigate your sample library with sound, and filter by automatically generated tags.
+                Find similar samples and filter them with intelligently.
               </p>
               <div className="flex justify-center space-x-4 mt-4">
                 <div className="bg-card border border-border rounded-md px-3 py-2 flex items-center">
@@ -144,16 +148,11 @@ export default function Home() {
                   {/* Download Buttons */}
                   <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
                     <DownloadButton
-                      href="/downloads/curator-macos.dmg" // Correct path from public folder
-                      filename="curator-macos.dmg"     // Suggested filename for download
+                      href="https://curator-tuf.s3.us-west-1.amazonaws.com/downloads/curator-setup.exe" // External download link
+                      filename="curator-windows-setup.exe"     // Suggested filename for download
+                      className="bg-[#0078D7] hover:bg-[#106EBE] text-white font-medium"
                     >
-                      <DownloadCloud className="mr-2 h-4 w-4" /> Download for macOS
-                    </DownloadButton>
-                    <DownloadButton
-                      href="/downloads/curator-windows.exe" // Correct path from public folder
-                      filename="curator-windows.exe"     // Suggested filename for download
-                    >
-                      <DownloadCloud className="mr-2 h-4 w-4" /> Download for Windows
+                      <FaWindows className="mr-2 h-4 w-4" /> Download for Windows
                     </DownloadButton>
                   </div>
                    <p className="text-xs text-muted-foreground pt-2">Check your email for updates.</p> {/* Optional extra info */}

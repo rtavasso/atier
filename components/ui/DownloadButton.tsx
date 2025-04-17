@@ -6,13 +6,14 @@ interface DownloadButtonProps {
   href: string; // e.g., "/downloads/curator-v1.0.zip"
   children: React.ReactNode;
   filename?: string; // Optional: specific filename for the download attribute
+  className?: string; // Optional: additional styling classes
 }
 
-export function DownloadButton({ href, children, filename }: DownloadButtonProps) {
+export function DownloadButton({ href, children, filename, className }: DownloadButtonProps) {
   return (
     // Use an anchor tag directly for simple downloads
     // Styling might need adjustment if your Button component doesn't render an <a>
-    <Button asChild>
+    <Button asChild className={className}>
         <a
             href={href}
             download={filename || true} // Use provided filename or default browser behavior

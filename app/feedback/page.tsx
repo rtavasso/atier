@@ -55,11 +55,8 @@ export default function Home() {
           <div className="max-w-md w-full flex flex-col items-center text-center">
             <div className="space-y-4 mb-8">
               <h1 className="text-4xl font-bold tracking-tighter md:text-5xl">
-                Find Your Sound. <span className="text-accent-cyan">Instantly.</span>
+                Search with <span className="text-accent-cyan">Sound.</span>
               </h1>
-              <p className="text-muted-foreground">
-                Navigate your sample library with sound rather than words.
-              </p>
             </div>
 
             {/* --- Conditional Rendering Section --- */}
@@ -111,6 +108,9 @@ export default function Home() {
                           {state.errors.feedback.join(', ')}
                         </p>
                       )}
+                      <p className="text-xs text-muted-foreground mt-1">
+                        If you're reporting a bug, please include any relevant logs from the command prompt that runs alongside the application.
+                      </p>
                     </div>
 
                     {/* Display general form messages */}
