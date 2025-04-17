@@ -13,9 +13,17 @@ const jetbrainsMono = JetBrains_Mono({
 
 // Updated Metadata
 export const metadata: Metadata = {
-  title: "curator - Sample Library Manager by a tier", // Updated Title
+  title: "curator", // Updated Title
   description: "Navigate your sample library with sound rather than words.", // Updated Description
-  generator: 'v0.dev' // Keep or update as needed
+  generator: 'v0.dev', // Keep or update as needed
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: '32x32' },
+      { url: '/icons/icon.svg', type: 'image/svg+xml' }
+    ],
+    apple: { url: '/icons/icon.svg', type: 'image/svg+xml' },
+    shortcut: { url: '/icons/icon.svg', type: 'image/svg+xml' },
+  }
 }
 
 export default function RootLayout({
@@ -25,6 +33,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/icons/icon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/icons/icon.svg" />
+      </head>
       <body className={`${inter.className} ${jetbrainsMono.variable}`}>
         <ThemeProvider
           attribute="class"
